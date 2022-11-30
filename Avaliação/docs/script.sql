@@ -52,3 +52,11 @@ insert into cursados values
 select * from alunos;
 select * from cursos;
 select * from cursados;
+
+create view vw_alunos as
+select cd.data, a.id_aluno as idAluno, a.nome, a.nascimento, 
+c.id_curso as idCurso, c.curso, c.duracao  from cursados cd 
+inner join alunos a on a.id_aluno = cd.id_aluno
+inner join cursos c on c.id_curso = cd.id_curso;
+
+select * from vw_alunos;

@@ -17,9 +17,14 @@ const deleteAluno = (body) => {
     return `delete from alunos where id_aluno='${body.id_aluno}'`
 }
 
+const toreadAluno = (body) => {
+    return `select * from vw_alunos where idAluno = '${body.id_aluno}'`;
+}
+
 module.exports = {
     getAlunos,
     createAluno,
     updateAluno,
-    deleteAluno
+    deleteAluno,
+    toreadAluno
 }

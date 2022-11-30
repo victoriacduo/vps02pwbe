@@ -7,5 +7,6 @@ routes.get('/alunos/read', aluninhos.getAlunos);
 routes.post('/alunos/create', aluninhos.createAluno);
 routes.put('/alunos/update', aluninhos.updateAluno);
 routes.delete('/alunos/delete/:id_aluno', aluninhos.deleteAluno);
+routes.get('/alunos/:id_aluno', aluninhos.toreadAluno);
 
 module.exports = routes;

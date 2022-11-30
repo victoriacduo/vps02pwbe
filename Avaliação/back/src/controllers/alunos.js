@@ -1,6 +1,34 @@
 const conDB = require('../conDB.js');
 const aluninhos = require('../models/alunos.js');
 
+class cursando {
+    constructor(data) {
+        this.data = data
+    }
+    aluno = {}
+    addAluno(a) {
+        this.aluno = a
+    }
+    curso = {}
+    addCurso(c) {
+        this.curso = c
+    }
+}
+class alunos {
+    constructor(id, nome, nascimento) {
+        this.id = id
+        this.nome = nome
+        this.nascimento = nascimento
+    }
+}
+class cursos {
+    constructor(id, curso, duracao) {
+        this.id = id
+        this.curso = curso
+        this.duracao = duracao
+    }
+}
+
 const getAlunos = (req, res) => {
     conDB.query(aluninhos.getAlunos(), (err, result) => {
         if(err == null){
@@ -43,9 +71,31 @@ const deleteAluno = (req, res) => {
     })
 }
 
+const toreadAluno = (req, res) => {
+    conDB.query(aluninhos.toreadAluno(req.params), (err, result) => {
+        if (err == null){
+            let composite = []
+            result.forEach((e, index) => {
+                let cursado = new cursando(e.data)
+                let a = new alunos(e.idAluno, e.nome, e.nascimento)
+                let c = new cursos(e.idCurso, e.curso, e.duracao)
+                cursado.addAluno(a)
+                cursado.addCurso(c)
+                composite.push(cursado)
+                if (index == result.length - 1) {
+                    res.json(composite).end()
+                }
+            });
+        }
+        else
+            res.status(500).json(err).end();
+    });
+}
+
 module.exports = {
     getAlunos,
     createAluno,
     updateAluno,
-    deleteAluno
+    deleteAluno,
+    toreadAluno
 }
